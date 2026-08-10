@@ -1,5 +1,5 @@
-package fase1;
-public class Funcionario {
+package fase2;
+public abstract class Funcionario {
     private int id;
     private String nome;
     private String cpf;

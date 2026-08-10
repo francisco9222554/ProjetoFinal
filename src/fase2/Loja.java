@@ -1,6 +1,8 @@
-package fase1;
+package fase2;
+
 import java.util.ArrayList;
 import java.util.List;
+
 public class Loja {
     private List<Funcionario> funcionarios;
     private List<Caixa> caixas;
@@ -35,9 +37,9 @@ public class Loja {
         return null;
     }
 
-    public Caixa buscarCaixaPorNumero(int numero) {
+    public Caixa buscarCaixaPorNumero(int numeroCaixa) {
         for (Caixa c : caixas) {
-            if (c.getNumero() == numero) {
+            if (c.getNumeroCaixa() == numeroCaixa) {
                 return c;
             }
         }
