@@ -1,12 +1,18 @@
-package fase2;
+package Funcionarios.newpackage;
+import Funcionarios.newpackage.Funcionario;
 public class Gerente extends Funcionario {
     private String setor;
     private double bonus;
 
-    public Gerente(int id, String nome, String cpf, double salario, String setor, double bonus) {
-        super(id, nome, cpf, salario, "Gerente");
+    public Gerente(String nome, String cpf, double salario, String setor, double bonus) {
+        super(nome, cpf, salario);
         this.setor = setor;
         this.bonus = bonus;
+    }
+
+    @Override
+    public String getCargo() {
+        return "Gerente";
     }
 
     @Override

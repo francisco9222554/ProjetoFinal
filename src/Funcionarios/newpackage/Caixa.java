@@ -1,31 +1,31 @@
-package fase2;
+package Funcionarios.newpackage;
 
 public class Caixa extends Funcionario {
     private int numeroCaixa;
     private String statusCaixa;
 
-    public Caixa(int id, String nome, String cpf, double salario, int numeroCaixa) {
-        super(id, nome, cpf, salario, "Operador de Caixa");
+    public Caixa(String nome, String cpf, double salario, int numeroCaixa) {
+        super(nome, cpf, salario);
         this.numeroCaixa = numeroCaixa;
         this.statusCaixa = "FECHADO";
     }
 
-    public int getNumeroCaixa() {
-        return numeroCaixa;
-    }
-
-    public String getStatusCaixa() {
-        return statusCaixa;
-    }
+    public int getNumeroCaixa() { return numeroCaixa; }
+    public String getStatusCaixa() { return statusCaixa; }
 
     public void abrirCaixa() {
         this.statusCaixa = "ABERTO";
-        System.out.println("Caixa " + numeroCaixa + " ABERTO com sucesso!");
+        System.out.println(">> Caixa " + numeroCaixa + " ABERTO com sucesso!");
     }
 
     public void fecharCaixa() {
         this.statusCaixa = "FECHADO";
-        System.out.println("Caixa " + numeroCaixa + " FECHADO com sucesso!");
+        System.out.println(">> Caixa " + numeroCaixa + " FECHADO com sucesso!");
+    }
+
+    @Override
+    public String getCargo() {
+        return "Operador de Caixa";
     }
 
     @Override
