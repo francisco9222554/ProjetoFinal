@@ -1,7 +1,5 @@
 package Pagamento.newpackage;
 
-import Pagamento.newpackage.Pagamento;
-
 public class PagamentoPix extends Pagamento {
     private String chavePix;
 

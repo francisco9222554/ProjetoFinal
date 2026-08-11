@@ -1,7 +1,5 @@
 package Pagamento.newpackage;
 
-import Pagamento.newpackage.Cartao;
-
 public class CartaoCredito extends Cartao {
     private double limiteDisponivel;
     private int quantidadeParcelas;
@@ -50,10 +48,10 @@ public class CartaoCredito extends Cartao {
         if (quantidadeParcelas > 1) {
             double valorParcela = getValor() / quantidadeParcelas;
             System.out.println("Condicao      : Parcelado em " + quantidadeParcelas + "x");
-            System.out.printf("Valor/Parcela   : R$ %.2f\n", valorParcela);
+            System.out.printf("Valor/Parcela : R$ %.2f\n", valorParcela);
         } else {
             System.out.println("Condicao      : A Vista");
         }
-        System.out.printf("Limite Restante  : R$ %.2f\n", limiteDisponivel);
+        System.out.printf("Limite Rest.  : R$ %.2f\n", limiteDisponivel);
     }
 }

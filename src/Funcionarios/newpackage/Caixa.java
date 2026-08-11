@@ -4,8 +4,8 @@ public class Caixa extends Funcionario {
     private int numeroCaixa;
     private String statusCaixa;
 
-    public Caixa(String nome, String cpf, double salario, int numeroCaixa) {
-        super(nome, cpf, salario);
+    public Caixa(String nome, String cpf, double salario, String senha, int numeroCaixa) {
+        super(nome, cpf, salario, senha);
         this.numeroCaixa = numeroCaixa;
         this.statusCaixa = "FECHADO";
     }
@@ -13,14 +13,26 @@ public class Caixa extends Funcionario {
     public int getNumeroCaixa() { return numeroCaixa; }
     public String getStatusCaixa() { return statusCaixa; }
 
+    public boolean isAberto() {
+        return "ABERTO".equalsIgnoreCase(this.statusCaixa);
+    }
+
     public void abrirCaixa() {
-        this.statusCaixa = "ABERTO";
-        System.out.println(">> Caixa " + numeroCaixa + " ABERTO com sucesso!");
+        if (isAberto()) {
+            System.out.println(">> ATENCAO: O Caixa " + numeroCaixa + " ja esta ABERTO!");
+        } else {
+            this.statusCaixa = "ABERTO";
+            System.out.println(">> Caixa " + numeroCaixa + " ABERTO com sucesso!");
+        }
     }
 
     public void fecharCaixa() {
-        this.statusCaixa = "FECHADO";
-        System.out.println(">> Caixa " + numeroCaixa + " FECHADO com sucesso!");
+        if (!isAberto()) {
+            System.out.println(">> ATENCAO: O Caixa " + numeroCaixa + " ja esta FECHADO!");
+        } else {
+            this.statusCaixa = "FECHADO";
+            System.out.println(">> Caixa " + numeroCaixa + " FECHADO com sucesso!");
+        }
     }
 
     @Override

@@ -1,11 +1,11 @@
 package Funcionarios.newpackage;
-import Funcionarios.newpackage.Funcionario;
+
 public class Gerente extends Funcionario {
     private String setor;
     private double bonus;
 
-    public Gerente(String nome, String cpf, double salario, String setor, double bonus) {
-        super(nome, cpf, salario);
+    public Gerente(String nome, String cpf, double salario, String senha, String setor, double bonus) {
+        super(nome, cpf, salario, senha);
         this.setor = setor;
         this.bonus = bonus;
     }

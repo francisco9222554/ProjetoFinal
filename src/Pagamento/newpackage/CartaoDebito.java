@@ -1,7 +1,5 @@
 package Pagamento.newpackage;
 
-import Pagamento.newpackage.Cartao;
-
 public class CartaoDebito extends Cartao {
     private double saldoDisponivel;
     private String senha;

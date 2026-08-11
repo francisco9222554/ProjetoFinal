@@ -1,13 +1,12 @@
 package Sistema.newpackage;
-import Sistema.newpackage.Loja;
+
+import Funcionarios.newpackage.Funcionario;
 import Funcionarios.newpackage.Gerente;
 import Funcionarios.newpackage.Caixa;
-import Pagamento.newpackage.PagamentoBoleto;
-import Pagamento.newpackage.PagamentoPix;
-import Pagamento.newpackage.Pagamento;
-import Pagamento.newpackage.CartaoDebito;
-import Pagamento.newpackage.CartaoCredito;
+import Pagamento.newpackage.*;
+
 import java.util.Scanner;
+
 public class Menu {
     private static Loja loja = new Loja();
     private static Scanner teclado = new Scanner(System.in);
@@ -16,88 +15,214 @@ public class Menu {
         int opcao = 0;
 
         do {
-            System.out.println("\n===== BEM VINDO AO PDV =====");
-            System.out.println("1 - Cadastrar Gerente");
-            System.out.println("2 - Cadastrar Operador de Caixa");
-            System.out.println("3 - Realizar Pagamento");
-            System.out.println("4 - Listar Funcionarios");
+            exibirMenuPrincipal();
+            opcao = lerInteiro();
+
+            switch (opcao) {
+                case 1:
+                    selecionarPerfilAcesso();
+                    break;
+                case 2:
+                    System.out.println("\nEncerrando o sistema PDV Javaveira... Ate logo!");
+                    break;
+                default:
+                    System.out.println("\nOpcao invalida! Tente novamente.");
+            }
+        } while (opcao != 2);
+
+        teclado.close();
+    }
+
+    private static void exibirMenuPrincipal() {
+        System.out.println("\n========================================");
+        System.out.println("            LOJA JAVAVEIRA              ");
+        System.out.println("========================================");
+        System.out.println("1 - Acessar Sistema");
+        System.out.println("2 - Sair");
+        System.out.print("Escolha uma opcao: ");
+    }
+
+    private static void selecionarPerfilAcesso() {
+        System.out.println("\n========================================");
+        System.out.println("           SELECAO DE PERFIL            ");
+        System.out.println("========================================");
+        System.out.println("1 - Gerente");
+        System.out.println("2 - Operador de Caixa");
+        System.out.println("3 - Voltar");
+        System.out.print("Escolha uma opcao: ");
+
+        int perfil = lerInteiro();
+
+        switch (perfil) {
+            case 1:
+                autenticarEExecutarGerente();
+                break;
+            case 2:
+                autenticarEExecutarCaixa();
+                break;
+            case 3:
+                break;
+            default:
+                System.out.println("Perfil invalido!");
+        }
+    }
+
+    private static Funcionario realizarLogin(String cargoEsperado) {
+        System.out.print("\nID do Funcionario: ");
+        int id = lerInteiro();
+        System.out.print("Senha: ");
+        String senha = teclado.nextLine();
+
+        Funcionario func = loja.buscarFuncionarioPorId(id);
+
+        if (func == null) {
+            System.out.println("\n>> Erro: Funcionario nao encontrado!");
+            return null;
+        }
+
+        if (!func.getCargo().equalsIgnoreCase(cargoEsperado)) {
+            System.out.println("\n>> Erro: O perfil selecionado e incompativel com o cargo do usuario!");
+            return null;
+        }
+
+        if (!func.validarSenha(senha)) {
+            System.out.println("\n>> Erro: Senha incorreta!");
+            return null;
+        }
+
+        System.out.println("\n>> Login realizado com sucesso! Bem-vindo(a), " + func.getNome() + ".");
+        return func;
+    }
+
+    private static void autenticarEExecutarGerente() {
+        Funcionario gerente = realizarLogin("Gerente");
+        if (gerente != null) {
+            menuGerente();
+        }
+    }
+
+    private static void autenticarEExecutarCaixa() {
+        Funcionario caixa = realizarLogin("Operador de Caixa");
+        if (caixa != null && caixa instanceof Caixa) {
+            menuCaixa((Caixa) caixa);
+        }
+    }
+
+    private static void menuGerente() {
+        int opcao = 0;
+        do {
+            System.out.println("\n========================================");
+            System.out.println("          PAINEL DO GERENTE             ");
+            System.out.println("========================================");
+            System.out.println("1 - Cadastrar Funcionario");
+            System.out.println("2 - Cadastrar Gerente");
+            System.out.println("3 - Listar Funcionarios");
+            System.out.println("4 - Gerar Relatorio de Vendas");
             System.out.println("5 - Listar Pagamentos");
-            System.out.println("6 - Abrir Caixa");
-            System.out.println("7 - Fechar Caixa");
-            System.out.println("8 - Sair");
+            System.out.println("6 - Voltar");
             System.out.print("Escolha uma opcao: ");
 
             opcao = lerInteiro();
 
             switch (opcao) {
                 case 1:
-                    cadastrarGerente();
-                    break;
-                case 2:
                     cadastrarOperadorCaixa();
                     break;
+                case 2:
+                    cadastrarGerente();
+                    break;
                 case 3:
-                    menuFormasPagamento();
+                    loja.listarFuncionarios();
                     break;
                 case 4:
-                    loja.listarFuncionarios();
+                    loja.gerarRelatorioVendas();
                     break;
                 case 5:
                     loja.listarPagamentos();
                     break;
                 case 6:
-                    alterarStatusCaixa(true);
-                    break;
-                case 7:
-                    alterarStatusCaixa(false);
-                    break;
-                case 8:
-                    System.out.println("\nEncerrando o sistema PDV... Ate logo!");
+                    System.out.println("Saindo do Painel do Gerente...");
                     break;
                 default:
-                    System.out.println("\nOpcao invalida! Tente novamente.");
+                    System.out.println("Opcao invalida!");
             }
-        } while (opcao != 8);
+        } while (opcao != 6);
+    }
 
-        teclado.close();
+    private static void menuCaixa(Caixa caixa) {
+        int opcao = 0;
+        do {
+            System.out.println("\n========================================");
+            System.out.println("      PAINEL OPERADOR DE CAIXA          ");
+            System.out.println("  Operador: " + caixa.getNome() + " | Caixa: " + caixa.getNumeroCaixa() + " (" + caixa.getStatusCaixa() + ")");
+            System.out.println("========================================");
+            System.out.println("1 - Abrir Caixa");
+            System.out.println("2 - Realizar Pagamento");
+            System.out.println("3 - Fechar Caixa");
+            System.out.println("4 - Listar Pagamentos");
+            System.out.println("5 - Voltar");
+            System.out.print("Escolha uma opcao: ");
+
+            opcao = lerInteiro();
+
+            switch (opcao) {
+                case 1:
+                    caixa.abrirCaixa();
+                    break;
+                case 2:
+                    if (!caixa.isAberto()) {
+                        System.out.println("\n>> ERRO: O caixa esta FECHADO! Abra o caixa antes de realizar pagamentos.");
+                    } else {
+                        menuFormasPagamento();
+                    }
+                    break;
+                case 3:
+                    caixa.fecharCaixa();
+                    break;
+                case 4:
+                    loja.listarPagamentos();
+                    break;
+                case 5:
+                    System.out.println("Saindo do Painel do Operador...");
+                    break;
+                default:
+                    System.out.println("Opcao invalida!");
+            }
+        } while (opcao != 5);
     }
 
     private static void cadastrarGerente() {
+        System.out.println("\n--- Cadastrar Gerente ---");
         System.out.print("Nome: ");
         String nome = teclado.nextLine();
         System.out.print("CPF: ");
         String cpf = teclado.nextLine();
         System.out.print("Salario: R$ ");
         double salario = lerDouble();
+        System.out.print("Senha: ");
+        String senha = teclado.nextLine();
         System.out.print("Setor: ");
         String setor = teclado.nextLine();
         System.out.print("Bonus: R$ ");
         double bonus = lerDouble();
 
-        loja.cadastrarFuncionario(new Gerente(nome, cpf, salario, setor, bonus));
+        loja.cadastrarFuncionario(new Gerente(nome, cpf, salario, senha, setor, bonus));
     }
 
     private static void cadastrarOperadorCaixa() {
+        System.out.println("\n--- Cadastrar Operador de Caixa ---");
         System.out.print("Nome: ");
         String nome = teclado.nextLine();
         System.out.print("CPF: ");
         String cpf = teclado.nextLine();
         System.out.print("Salario: R$ ");
         double salario = lerDouble();
+        System.out.print("Senha: ");
+        String senha = teclado.nextLine();
         System.out.print("Numero do Caixa: ");
         int numCaixa = lerInteiro();
 
-        loja.cadastrarFuncionario(new Caixa(nome, cpf, salario, numCaixa));
-    }
-
-    private static void alterarStatusCaixa(boolean abrir) {
-        System.out.print("Informe o ID do Operador de Caixa: ");
-        int id = lerInteiro();
-        if (abrir) {
-            loja.abrirCaixaFuncionario(id);
-        } else {
-            loja.fecharCaixaFuncionario(id);
-        }
+        loja.cadastrarFuncionario(new Caixa(nome, cpf, salario, senha, numCaixa));
     }
 
     private static void menuFormasPagamento() {

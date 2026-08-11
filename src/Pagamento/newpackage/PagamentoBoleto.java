@@ -1,7 +1,5 @@
 package Pagamento.newpackage;
 
-import Pagamento.newpackage.Pagamento;
-
 public class PagamentoBoleto extends Pagamento {
     private String codigoBarras;
 
@@ -32,6 +30,6 @@ public class PagamentoBoleto extends Pagamento {
     public void exibirInformacoes() {
         super.exibirInformacoes();
         System.out.println("Modalidade    : Boleto Bancario");
-        System.out.println("Codigo de Barras   : " + codigoBarras);
+        System.out.println("Cod. Barras   : " + codigoBarras);
     }
 }

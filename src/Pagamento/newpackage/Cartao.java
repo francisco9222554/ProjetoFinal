@@ -30,7 +30,9 @@ public abstract class Cartao extends Pagamento {
         super.exibirInformacoes();
         System.out.println("Titular       : " + nomeTitular);
         System.out.println("Bandeira      : " + bandeira);
-        String finalCartao = (numeroCartao.length() >= 4) ? numeroCartao.substring(numeroCartao.length() - 4) : numeroCartao;
-        System.out.println("Numero do Cartao   : **** **** **** " + finalCartao);
+        String finalCartao = (numeroCartao != null && numeroCartao.length() >= 4) 
+                ? numeroCartao.substring(numeroCartao.length() - 4) 
+                : numeroCartao;
+        System.out.println("Numero Cartao : **** **** **** " + finalCartao);
     }
 }

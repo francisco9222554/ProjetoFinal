@@ -1,4 +1,5 @@
 package Pagamento.newpackage;
+
 public abstract class Pagamento {
     private static int contador = 1;
     private int numeroPagamento;
@@ -11,17 +12,9 @@ public abstract class Pagamento {
         this.status = "PENDENTE";
     }
 
-    public int getNumeroPagamento() {
-        return numeroPagamento;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+    public int getNumeroPagamento() { return numeroPagamento; }
+    public double getValor() { return valor; }
+    public String getStatus() { return status; }
 
     protected void setStatus(String status) {
         this.status = status;
